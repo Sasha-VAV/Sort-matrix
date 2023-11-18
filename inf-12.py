@@ -39,7 +39,6 @@ else:
                 if int(value[j]) == float(value[j]) and 1 <= int(value[j]) <= 100:
                     matrix[i][j] = int(value[j])
                 else:
-                    print(f"Некорректное значение в {i + 1} строке {j + 1} столбце")
                     raise Exception
             except Exception:
                 print(f"Некорректное значение в {i + 1} строке {j + 1} столбце")
