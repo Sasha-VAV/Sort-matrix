@@ -1,10 +1,19 @@
 import numpy
 
 print("Введите размер M квадратной матрицы MxM")
-M = int(input("M="))  # ввод размера матрицы
-while M > 8 or M < 2 or M % 2 != 0:  # проверка корректности размера введенной матрицы
-    print("Некорректный размер матрицы, введите снова")
-    M = int(input("M="))
+M = input("M=")  # ввод размера матрицы
+while True:  # проверка корректности размера введенной матрицы
+    try:
+        M = float(M)
+        if M > 8 or M < 2 or int(M) % 2 != 0 or float(M)!=int(M):
+            print("Некорректный размер матрицы, введите снова")
+            M = input("M=")
+        else:
+            M = int(M)
+            break
+    except:
+        print("Некорректный размер матрицы, введите снова")
+        M = input("M=")
 print("Вы хотите ввести значения элементов матрицы, иначе они заполнятся случайными числами?\nДа/Нет")
 # получение от пользователя вида заполнения матрицы элементами
 while True:
@@ -26,15 +35,24 @@ else:
         value = list(input().split())  # считывание новой строки матрицы
         for j in range(M):
             # проверка корректности введенных данных
-            if int(value[j]) == float(value[j]) and 1 <= int(value[j]) <= 100:
-                matrix[i][j] = int(value[j])
-            else:
-                while True:  # ожидание, пока пользователь не введет корректное значение
+            try:
+                if int(value[j]) == float(value[j]) and 1 <= int(value[j]) <= 100:
+                    matrix[i][j] = int(value[j])
+                else:
                     print(f"Некорректное значение в {i + 1} строке {j + 1} столбце")
-                    new_value = input("Новое значение:")
-                    if int(new_value) == float(new_value) and 1 <= int(new_value) <= 100:
-                        matrix[i][j] = int(new_value)
-                        break
+                    raise Exception
+            except Exception:
+                print(f"Некорректное значение в {i + 1} строке {j + 1} столбце")
+                while True:  # ожидание, пока пользователь не введет корректное значение
+                    try:
+                        new_value = input("Новое значение:")
+                        if int(new_value) == float(new_value) and 1 <= int(new_value) <= 100:
+                            matrix[i][j] = int(new_value)
+                            break
+                        else:
+                            print(f"Некорректное значение в {i + 1} строке {j + 1} столбце")
+                    except:
+                        print(f"Некорректное значение в {i + 1} строке {j + 1} столбце")
 sort_matrix = [0] * M * M  # инициализация и заполнение сортировочного массива нулями
 for i in range(M):
     for j in range(M):
