@@ -1,5 +1,4 @@
 import numpy
-import PIL
 print("Введите размер M квадратной матрицы MxM")
 M = int(input("M="))  # ввод размера матрицы
 while M > 8 or M < 2 or M % 2 != 0:  # проверка корректности размера введенной матрицы
@@ -14,7 +13,7 @@ while True:
         break
     else:
         print("Некорректный ввод, попробуйте снова")
-matrix = numpy.zeros((M, M), int)  # инициализация двумерного массива и заполнение его нулями
+matrix = [ [0]*M for i in range(M)] # инициализация двумерного массива и заполнение его нулями
 if random_input:
     for i in range(M):
         for j in range(M):
@@ -35,11 +34,17 @@ else:
                     if int(new_value) == float(new_value) and 1 <= int(new_value) <= 100:
                         matrix[i][j] = int(new_value)
                         break
-sort_matrix = numpy.zeros((M * M), int)  # инициализация и заполнение сортировочного массива нулями
+sort_matrix = [0]*M*M  # инициализация и заполнение сортировочного массива нулями
 for i in range(M):
     for j in range(M):
         sort_matrix[i * M + j] = matrix[i][j]  # преобразование двумерного массива в одномерный
-sort_matrix = sorted(sort_matrix)  # сортировка одномерного массива встроенной функцией
+for i in range(M*M):  # сортировка одномерного массива по убыванию по условию
+    current_index_max=i
+    for j in range(i+1,M*M):
+        if sort_matrix[j]>sort_matrix[current_index_max]:
+            current_index_max=j
+    sort_matrix[i],sort_matrix[current_index_max]=sort_matrix[current_index_max],sort_matrix[i]
+sort_matrix=sort_matrix[::-1]   # инвертирование массива
 # Преобразование одномерного отсортированного массива в заданный
 for i in range(M):
     for j in range(M // 2):
